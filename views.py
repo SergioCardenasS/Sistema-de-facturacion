@@ -10,6 +10,7 @@ from plugins.models_qt import MyTableModel
 from tab_views.SaleTab import Sale_Tab
 from tab_views.FastSaleTab import Fast_Sale_Tab
 from tab_views.InventoryTab import Inventory_Tab
+from tab_views.AdministratorTab import Administrator_Tab
 
 Base = declarative_base()
 
@@ -23,7 +24,7 @@ session = Session()
 class MainWindow(QtGui.QWidget):
     def __init__(self):
         super(MainWindow, self).__init__()
-        self.setMinimumSize(1000, 800)
+        #self.setMinimumSize(1000, 800)
         self.setWindowTitle("Sistema Pagos")
 
         central_layout = QtGui.QVBoxLayout()
@@ -32,10 +33,12 @@ class MainWindow(QtGui.QWidget):
         tab_sells = Sale_Tab()
         tab_rapid_sell = Fast_Sale_Tab()
         tab_invontary = Inventory_Tab()
+        tab_administrator = Administrator_Tab()
 
         tabs.addTab(tab_sells, 'Ventas')
         tabs.addTab(tab_rapid_sell, 'Venta Rapida')
         tabs.addTab(tab_invontary, 'Inventario')
+        tabs.addTab(tab_administrator, 'Administrador de Ventas')
 
         central_layout.addWidget(tabs)
         self.setLayout(central_layout)

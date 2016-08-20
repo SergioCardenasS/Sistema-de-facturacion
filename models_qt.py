@@ -1,4 +1,5 @@
 import sys
+from  datetime import date
 from PyQt4 import QtGui, QtCore
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
@@ -6,6 +7,7 @@ from sqlalchemy.orm import sessionmaker, relationship
 from sqlalchemy import *
 from sqlalchemy.ext.declarative import declarative_base
 from models import *
+import sys
 
 
 Base = declarative_base()
@@ -53,10 +55,10 @@ class MyTableModel(QAbstractTableModel):
             return QVariant(self.header_names[col])
         return QVariant()
 
-    def rowCount(self, parent):
+    def rowCount(self, parent=QtCore.QModelIndex()):
         return len(self.arraydata)
 
-    def columnCount(self, parent):
+    def columnCount(self, parent=QtCore.QModelIndex()):
         return len(self.header_names)
 
     def data(self, index, role):
@@ -80,4 +82,18 @@ class MyTableModel(QAbstractTableModel):
 
     def refresh_data(self):
         self.arraydata = (session.query(self.model_alchemy).limit(20).all())
+        self.layoutChanged.emit()
+
+    def searchBillToday(self, search_text=None):
+        text_query = '%'+unicode(search_text.toUtf8(), encoding="UTF-8")+'%'
+        today = '%'+str(date.today())+'%'
+        self.arraydata = (session.query(Factura)
+                        .filter(Factura.id.like(text_query)) \
+                        .filter(Factura.fecha.like(today)).all())
+        self.layoutChanged.emit()
+
+    def searchBillDay(self, search_text=None):
+        text_query = '%'+unicode(search_text.toUtf8(), encoding="UTF-8")+'%'
+        self.arraydata = (session.query(Factura)
+                        .filter(Factura.fecha.like(text_query)).all())
         self.layoutChanged.emit()

@@ -7,6 +7,7 @@ from sqlalchemy import *
 from sqlalchemy.ext.declarative import declarative_base
 from models import *
 from AddCategory import Add_Category
+from Generic_forms import GenericFormDialog
 
 Base = declarative_base()
 
@@ -27,7 +28,7 @@ class Modify_Product(QDialog):
         self.acceptButton = QPushButton("Guardar Producto", self)
         self.cancelButton = QPushButton("Cancelar")
         self.newCategoryButton = QPushButton("Agregar Nueva Categoria", self)
-        self.query = session.query(Categoria.nombre).all()
+        self.query = session.query(Categoria).all()
         category = QLabel('Categoria')
         name = QLabel('Nombre')
         purchase_price = QLabel('Precio Compra')
@@ -37,8 +38,11 @@ class Modify_Product(QDialog):
 
         self.edit_category = QComboBox()
         #query
-        for categories in range(len(self.query)):
-            self.edit_category.addItems(self.query[categories])
+
+        for categories in self.query:
+            str_category = '%s %s' % (str(categories.id), str(categories.nombre))
+            self.edit_category.addItem(str_category)
+
         self.edit_name = QLineEdit()
         self.edit_purchase_price = QDoubleSpinBox(self)
         self.edit_purchase_price.setSingleStep(00.01)
@@ -108,13 +112,16 @@ class Modify_Product(QDialog):
         sell_price = self.edit_sell_price.value()
         stock = self.edit_stock.value()
         detail = unicode(self.edit_detail.toPlainText())
-        #Query insert
+        id_category = int(category.split(' ')[0])
+        self.product.categoria = id_category
+        self.product.nombre = name
+        self.product.precio_compra = purchase_price
+        self.product.precio_venta = sell_price
+        self.product.stock = stock
+        self.product.detalle = detail
+        session.commit()
+        
         self.close()
 
     def create_Category(self):
-        if (self.control_singleton):
-            QMessageBox.warning(self, 'Error', ERROR_A_PROCESS_OPENED, QMessageBox.Ok)
-        else:
-            self.control_singleton = True
-            window = Add_Category().exec_()
-            self.control_singleton = False
+        window, data = GenericFormDialog.get_data(Categoria, self)

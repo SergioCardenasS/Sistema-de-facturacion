@@ -57,6 +57,7 @@ Gasto = Table('Gasto', metadata,
               Column('id', Integer, primary_key=True, autoincrement=True),
               Column('detalle', String(80)),
               Column('monto', Numeric(15, 2), nullable=False),
+              Column('fecha', Date, nullable=False)
               )
 
 Caja = Table('Caja', metadata,
@@ -152,10 +153,12 @@ class Gasto(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     detalle = Column(String(80))
     monto = Column(Numeric(15, 2), nullable=False)
+    fecha = Column(Date, nullable=False)
 
-    def __init__(self, detalle, monto):
+    def __init__(self, detalle, monto, fecha):
         self.detalle = detalle
         self.monto = monto
+        self.fecha = fecha
 
 
 class Caja(Base):

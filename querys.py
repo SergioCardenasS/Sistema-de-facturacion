@@ -105,23 +105,23 @@ session.commit()
 
 
 '''Agregando gastos'''
-session.add(Gasto('Gasto1',11.00))
-session.add(Gasto('Gasto2',12.00))
-session.add(Gasto('Gasto3',13.00))
-session.add(Gasto('Gasto4',14.00))
-session.add(Gasto('Gasto5',15.00))
-session.add(Gasto('Gasto6',16.00))
-session.add(Gasto('Gasto7',17.00))
-session.add(Gasto('Gasto8',18.00))
+session.add(Gasto('Gasto1',11.00,date(2016,4,1)))
+session.add(Gasto('Gasto2',12.00,date(2016,4,2)))
+session.add(Gasto('Gasto3',13.00,date(2016,4,3)))
+session.add(Gasto('Gasto4',14.00,date(2016,4,4)))
+session.add(Gasto('Gasto5',15.00,date(2016,4,4)))
+session.add(Gasto('Gasto6',16.00,date(2016,4,5)))
+session.add(Gasto('Gasto7',17.00,date(2016,4,5)))
+session.add(Gasto('Gasto8',18.00,date(2016,4,6)))
 session.commit()
 
 
 '''Agregando Caja'''
 
-session.add(Caja(11.00,100.00,50.00,50.00,datetime.utcnow()))
-session.add(Caja(11.00,110.00,50.00,60.00,datetime.utcnow()))
-session.add(Caja(11.00,120.00,50.00,70.00,datetime.utcnow()))
-session.add(Caja(11.00,130.00,50.00,80.00,datetime.utcnow()))
-session.add(Caja(11.00,140.00,50.00,90.00,datetime.utcnow()))
-session.add(Caja(11.00,150.00,50.00,100.00,datetime.utcnow()))
+session.add(Caja(11.00,100.00,50.00,50.00,date(2016,4,1)))
+session.add(Caja(11.00,110.00,50.00,60.00,date(2016,4,2)))
+session.add(Caja(11.00,120.00,50.00,70.00,date(2016,4,3)))
+session.add(Caja(11.00,130.00,50.00,80.00,date(2016,4,4)))
+session.add(Caja(11.00,140.00,50.00,90.00,date(2016,4,5)))
+session.add(Caja(11.00,150.00,50.00,100.00,date(2016,4,6)))
 session.commit()
